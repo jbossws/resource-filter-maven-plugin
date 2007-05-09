@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSuite name="MarshallingPerformance" xmlns="http://www.sun.com/japex/testSuite">
+
+   <param name="japex.classPath" value="./dist/classes"/>
+   <param name="japex.classPath" value="${JAPEX_HOME}/jdsl/*.jar"/>
+   <param name="japex.classPath" value="./lib/*.jar"/>
+
+   <!-- Run each test for 20 seconds -->
+   <param name="japex.warmupTime" value="10"/>
+   <param name="japex.runTime" value="10"/>
+
+   <!-- measure throughput, fixed total execution time -->
+   <param name="japex.resultUnit" value="tps"/>
+
+   <!-- measure incocation time, fixed number of invocations
+   <param name="japex.resultUnit" value="ms"/>
+   -->
+	
+   <!-- marshalling drivers -->
+   <!--driver name="JBossXBMarshallerDriver" normal="true">
+      <param name="japex.driverClass" value="org.jboss.test.xb.XBMarshallerDriver"/>
+      <param name="description" value="JBossXB Marshaller"/>
+   </driver-->
+
+   <driver name="JBossXBSchemaMarshallerDriver" normal="true">
+      <param name="japex.driverClass" value="org.jboss.test.xb.XBSchemaMarshallerDriver"/>
+      <param name="description" value="JBossXB SchemaBinding Marshaller"/>
+   </driver>
+
+   <driver name="JAXBMarshallerDriver" normal="true">
+      <param name="japex.driverClass" value="org.jboss.test.jaxb.JAXBMarshallDriver"/>
+      <param name="description" value="JAXB 2.0 Marshaller"/>
+   </driver>
+   
+   
+   <!-- unmarshalling drivers -->
+   <driver name="JBossXBUnmarshallerDriver" normal="true">
+      <param name="japex.driverClass" value="org.jboss.test.xb.XBUnmarshallerDriver"/>
+      <param name="description" value="JBossXB Unmarshaller"/>
+   </driver>
+
+   <driver name="JAXBUnmarshallerDriver" normal="true">
+      <param name="japex.driverClass" value="org.jboss.test.jaxb.JAXBUnmarshallerDriver"/>
+      <param name="description" value="JAXB 2.0 Unmarshaller"/>
+   </driver>
+
+   
+   <!-- testcases -->
+   <testCase name="3 Items">
+      <param name="schemaFile" value="data/po.xsd"/>
+      <param name="dataFile" value="data/po.xml"/>
+   </testCase>
+
+   <testCase name="20 Items">
+      <param name="schemaFile" value="data/po.xsd"/>
+      <param name="dataFile" value="data/po-20.xml"/>
+   </testCase>
+
+   <testCase name="50 Items">
+      <param name="schemaFile" value="data/po.xsd"/>
+      <param name="dataFile" value="data/po-50.xml"/>
+   </testCase>
+
+   <testCase name="100 Items">
+      <param name="schemaFile" value="data/po.xsd"/>
+      <param name="dataFile" value="data/po-100.xml"/>
+   </testCase>
+
+</testSuite>

@@ -1,0 +1,42 @@
+General Architecture
+--------------------
+(jbossws) WebServiceImporter -> (jbossws-sun) WebServiceImporterProviderImpl -> WebServiceImporterImpl -> (sun) CompileTool
+
+Directory Layout
+----------------
+lib - compile time dependencies
+output/classes - compiled classes
+output/lib - final location for jbossws-sun-wsimport.jar
+
+sun/src/main - modified CDDL JAX-WS code
+jbossws/src/main - jbossws plugin 
+
+Sun Source Tag
+--------------
+The original sun source is available at:
+cvs -d :pserver:guest@cvs.dev.java.net:/cvs co -r glassfish-90ur1-09282006 jax-ws-sources
+
+It's important to correlate the glassfish tags for TCK compatibility.
+
+Recreation Steps
+---i------------
+1. Grab jax-ws sources from java.net (make sure to use a glassfish tag)
+2. Merge the ri and tools tree
+3. Remove all references to http.jar (delete EndpointImpl and everything that references it)
+4. Use jarjar to rename classes in saaj-impl.jar to org/jboss/com/sun (this will ensure no runtime references to it)
+5. Rename all sun code packages to org/jboss/com/sun 
+6. Edit the source comment code to include a jbossws message
+7. build jar, and verify it works (should only have jaxb dependencies and misc apis that jboss already has)
+
+Runtime Dependencies
+--------------------
+1. jaxb-api.jar
+2. jaxb-impl.jar
+3. jaxb-xjc.jar
+4. stax-1.1.1.jar or wstax
+5. jdk tools.jar
+6. The usual jbossws jars
+
+Compiletime Dependencies
+------------------------
+Everything in lib

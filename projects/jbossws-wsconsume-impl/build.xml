@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ The contents of this file are subject to the terms
+ of the Common Development and Distribution License
+ (the License).  You may not use this file except in
+ compliance with the License.
+ 
+ You can obtain a copy of the license at
+ https://glassfish.dev.java.net/public/CDDLv1.0.html.
+ See the License for the specific language governing
+ permissions and limitations under the License.
+ 
+ When distributing Covered Code, include this CDDL
+ Header Notice in each file and include the License file
+ at https://glassfish.dev.java.net/public/CDDLv1.0.html.
+ If applicable, add the following below the CDDL Header,
+ with the fields enclosed by brackets [] replaced by
+ you own identifying information:
+ "Portions Copyrighted [year] [name of copyright owner]"
+ 
+ Copyright 2006 Sun Microsystems Inc. All Rights Reserved
+-->
+
+<!--
+  Build script for the source code bundle
+-->
+<project name="jax-ws" default="main">
+
+  <property name="Name" value="jbossws-wsconsume-impl"/>
+  <property name="version" value="2.0.0"/>
+  <property name="output" value="output"/>
+  <property name="output.classes" value="output/classes"/>
+  <property name="output.lib" value="output/lib"/>
+
+  <tstamp>
+      <format property="now" pattern="MM/dd/yyyy HH:mm:ss" unit="hour" locale="en_US"/>
+  </tstamp>
+  <property name="build.id" value="${now}(${user.name})" />
+  <property name="build.version" value="${Name} ${version}-${build.id}" />
+  <echo message="The build id is: ${build.version}" /> 
+
+  <macrodef name="versionProp"
+    description="generates a version property file">
+    <attribute name="file" />
+    <sequential>
+      <echo file="@{file}"
+>build-id=${build.id}
+build-version=${build.version}
+major-version=${version}
+</echo>
+    </sequential>
+  </macrodef>
+
+  <path id="compile.classpath">
+    <fileset dir="lib">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="clean">
+    <delete dir="${output}"/>
+  </target>
+
+  <target name="main" depends="compile, jar"/>
+
+  <target name="compile">
+    <mkdir dir="${output.classes}"/>
+    <copy todir="${output.classes}">
+      <fileset dir="sun/src/main">
+        <include name="**/*.properties" />
+      </fileset>
+    </copy>
+    <versionProp file="${output.classes}/org/jboss/com/sun/xml/ws/version.properties" />
+    <versionProp file="${output.classes}/org/jboss/com/sun/tools/ws/version.properties" />
+    <javac destdir="${output.classes}" debug="true">
+      <src path="sun/src/main"/>
+      <src path="jboss/src/main"/>
+      <classpath refid="compile.classpath"/>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${output.lib}"/>
+    <jar jarfile="${output.lib}/jbossws-wsconsume-impl.jar">
+      <manifest>
+        <attribute name="Implementation-Title" value="jbossws-wsconsume-impl"/>
+        <attribute name="Implementation-Version" value="${build.version}"/>
+        <attribute name="Implementation-Vendor" value="jboss"/>
+      </manifest>
+      <fileset dir="${output.classes}"/>
+    </jar>
+  </target>
+
+<!-- Create a safe SAAJ Impl
+  <target name="jarjar">
+    <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask" classpath="./jarjar.jar"/>
+    <jarjar jarfile="lib/sun-saaj-impl.jar">
+      <zipfileset src="lib/saaj-impl.jar">
+        <include name="com/sun/**/*"/>
+      </zipfileset>
+      <rule pattern="com.sun.**" result="org.jboss.@0"/>
+    </jarjar>
+  </target> 
+-->
+</project>

@@ -1,0 +1,62 @@
+<project name="Japex Sample" default="run"  basedir=".">
+   <property environment="env"/>
+
+   <property name="config" value="config.xml"/>
+
+   <path id="class.path">
+      <fileset dir="${env.JAPEX_HOME}/jdsl/" includes="*.jar"/>
+      <fileset dir="${env.JAPEX_HOME}/lib/" includes="*.jar"/>
+      <fileset dir="./lib/" includes="*.jar"/>
+   </path>
+
+   <target name="clean">
+      <delete dir="dist"/>
+   </target>
+
+   <target name="prepare">
+      <mkdir dir="dist"/>
+      <mkdir dir="dist/classes"/>
+   </target>
+
+   <target name="compile" depends="prepare" description="Compile JUnitSuite">
+      <javac srcdir="src" destdir="dist/classes" debug="on" optimize="on" deprecation="on">
+         <classpath refid="class.path"/>
+      </javac>
+   </target>
+
+   <target name="run" depends="compile">
+      <java dir="." fork="true" classname="com.sun.japex.Japex">
+
+         <!-- // Enable jdwp debugger -->
+         <!--jvmarg line="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5006"/-->
+
+         <!-- // Enable yourkit profiler -->
+         <!--jvmarg value="-Xrunyjpagent:sessionname=japex"/-->
+
+         <jvmarg value="-server"/>
+
+         <classpath refid="class.path"/>
+         <arg line="${config}"/>
+      </java>
+   </target>
+
+   <target name="debug-nb">
+      <property name="src.folders" value="./src:./src/binding:../../src:../../src/binding"/>
+      <path id="cp">
+         <pathelement location="../../build/classes"/>
+         <path refid="class.path"/>
+      </path>
+      <nbjpdastart addressproperty="jpda.address" name="Japex" transport="dt_socket">
+         <classpath refid="cp"/>
+      </nbjpdastart>
+      <java classname="com.sun.japex.Japex" fork="true">
+         <classpath refid="cp"/>
+         <jvmarg value="-Xdebug"/>
+         <jvmarg value="-Xnoagent"/>
+         <jvmarg value="-Djava.compiler=none"/>
+         <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
+         <arg line="${config}"/>
+      </java>
+   </target>
+
+</project>

@@ -1,0 +1,11 @@
+Path: .
+URL: https://svn.jboss.org/repos/jbossws/subprojects/jbossws-wsconsume-impl
+Repository Root: https://svn.jboss.org/repos/jbossws
+Repository UUID: 50344849-fb0f-0410-a53f-a94597aac05c
+Revision: 2893
+Node Kind: directory
+Schedule: normal
+Last Changed Author: jason.greene@jboss.com
+Last Changed Rev: 2410
+Last Changed Date: 2007-02-21 00:12:43 +0100 (Wed, 21 Feb 2007)
+
