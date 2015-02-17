@@ -7,7 +7,7 @@
   <packaging>jar</packaging>
   <description>Additional custom resources-plugin filters</description>
 
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0.Beta1</version>
 
   <!-- Parent -->
   <parent>
@@ -18,9 +18,9 @@
 
   <!-- Source Control Management -->
   <scm>
-    <connection>scm:svn:http://anonsvn.jboss.org/repos/jbossws/projects/plugins/maven/resource-filter/trunk</connection>
-    <developerConnection>scm:svn:https://svn.jboss.org/repos/jbossws/projects/plugins/maven/resource-filter/trunk</developerConnection>
-    <url>http://fisheye.jboss.com/viewrep/JBossWS/projects/plugins/maven/resource-filter/trunkk</url>
+    <connection>scm:svn:http://anonsvn.jboss.org/repos/jbossws/projects/plugins/maven/resource-filter/tags/resource-filter-1.0.0.Beta1</connection>
+    <developerConnection>scm:svn:https://svn.jboss.org/repos/jbossws/projects/plugins/maven/resource-filter/tags/resource-filter-1.0.0.Beta1</developerConnection>
+    <url>http://fisheye.jboss.com/viewrep/JBossWS/projects/plugins/maven/resource-filter/tags/resource-filter-1.0.0.Beta1</url>
   </scm>
 
   <properties>
