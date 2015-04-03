@@ -46,11 +46,20 @@ public class OperationsValueSource extends AbstractLogEnabled implements ValueSo
 			int sum = 0;
 			while (st.hasMoreTokens()) {
 				final String token = st.nextToken();
-				sum = sum + Integer.valueOf(properties.getProperty(token, token));
+				sum = sum + get(token);
 			}
 			return sum;
 		}
 		return null;
+	}
+	
+	private int get(String token) {
+		String spv = System.getProperty(token);
+		if (spv != null) {
+			return Integer.valueOf(spv);
+		} else {
+			return Integer.valueOf(properties.getProperty(token, token));
+		}
 	}
 	
 	@Override
