@@ -51,8 +51,8 @@ import org.codehaus.plexus.interpolation.multi.MultiDelimiterStringSearchInterpo
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
-import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.FileUtils.FilterWrapper;
+import org.apache.maven.shared.utils.io.FileUtils;
+import org.apache.maven.shared.utils.io.FileUtils.FilterWrapper;
 import org.codehaus.plexus.util.PathTool;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.Scanner;
@@ -97,29 +97,6 @@ public class OperationsMavenResourcesFilter extends AbstractLogEnabled implement
      *  role-hint="default"
      */
     private MavenFileFilter mavenFileFilter;
-
-    @Override
-    public void filterResources( List<Resource> resources, File outputDirectory, MavenProject mavenProject, String encoding,
-            List<String> fileFilters, List<String> nonFilteredFileExtensions, MavenSession mavenSession ) throws MavenFilteringException {
-        final MavenResourcesExecution mavenResourcesExecution = new MavenResourcesExecution(resources, outputDirectory,
-                mavenProject, encoding, fileFilters, nonFilteredFileExtensions, mavenSession);
-        
-        mavenResourcesExecution.setUseDefaultFilterWrappers(true);
-        //    mavenResourcesExecution.setEscapeWindowsPaths( false );
-
-        this.filterResources(mavenResourcesExecution);
-    }
-
-    @Override
-    public void filterResources( List<Resource> resources, File outputDirectory, String encoding,
-            List<FileUtils.FilterWrapper> filterWrappers, File resourcesBaseDirectory,
-            List<String> nonFilteredFileExtensions ) throws MavenFilteringException {
-        
-        final MavenResourcesExecution mavenResourcesExecution = new MavenResourcesExecution(resources, outputDirectory,
-                encoding, filterWrappers, resourcesBaseDirectory, nonFilteredFileExtensions);
-        
-        this.filterResources(mavenResourcesExecution);
-    }
 
     @Override
     public boolean filteredFileExtension( String fileName, List<String> userNonFilteredFileExtensions ) {
@@ -293,7 +270,7 @@ public class OperationsMavenResourcesFilter extends AbstractLogEnabled implement
                 final LinkedHashSet<String> delimiters = mavenResourcesExecution.getDelimiters();
                 interpolator.setDelimiterSpecs(delimiters);
 
-                final List<?> projectStartExpressions = mavenResourcesExecution.getProjectStartExpressions();
+                final List<String> projectStartExpressions = mavenResourcesExecution.getProjectStartExpressions();
                 RecursionInterceptor ri = null;
                 if (projectStartExpressions != null && !projectStartExpressions.isEmpty()) {
                     ri = new PrefixAwareRecursionInterceptor(projectStartExpressions, true);
