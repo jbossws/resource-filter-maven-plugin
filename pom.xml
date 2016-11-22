@@ -13,7 +13,7 @@
   <parent>
     <groupId>org.jboss.ws</groupId>
     <artifactId>jbossws-parent</artifactId>
-    <version>1.1.0.GA</version>
+    <version>1.3.1-SNAPSHOT</version>
   </parent>
 
   <!-- Source Control Management -->
@@ -27,14 +27,11 @@
     <jboss-logging.version>3.1.2.GA</jboss-logging.version>
     <jboss-logging-processor.version>1.0.3.Final</jboss-logging-processor.version>
     <junit.version>3.8.2</junit.version>
-    <maven-filtering.version>1.1</maven-filtering.version>
+    <maven-filtering.version>3.1.1</maven-filtering.version>
     <plexus-maven-plugin.version>1.3.8</plexus-maven-plugin.version>
   </properties>
 
-  <!-- Dependencies -->
   <dependencies>
-
-    <!-- provided apis -->
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
@@ -52,8 +49,6 @@
       <artifactId>maven-filtering</artifactId>
       <version>${maven-filtering.version}</version>
     </dependency>
-
-    <!-- test dependencies -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -62,33 +57,8 @@
     </dependency>
   </dependencies>
 
-  <!-- Plugins -->
   <build>
-    <testResources>
-      <testResource>
-        <directory>src/test/java</directory>
-        <includes>
-           <include>**/*.properties</include>
-        </includes>
-      </testResource>
-      <testResource>
-        <directory>src/test/resources</directory>
-        <includes>
-          <include>**</include>
-        </includes>
-      </testResource>
-    </testResources>
-
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.0-beta-8</version>
-        <configuration>
-          <scmCommentPrefix>[${jira.issue}] :</scmCommentPrefix>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.codehaus.plexus</groupId>
         <artifactId>plexus-maven-plugin</artifactId>
@@ -101,30 +71,6 @@
           </execution>
         </executions>
       </plugin>
-
-       <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-javadoc-plugin</artifactId>
-         <version>2.8</version>
-         <executions>
-           <execution>
-             <phase>package</phase>
-             <goals>
-               <goal>jar</goal>
-             </goals>
-           </execution>
-         </executions>
-       </plugin>
-       <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-compiler-plugin</artifactId>
-         <configuration>
-           <!-- Optional if you wan to generate skeleton translation properties files -->
-           <compilerArgument>
-             -AgeneratedTranslationFilesPath=${project.basedir}/target/generated-translation-files
-           </compilerArgument>
-         </configuration>
-       </plugin>
     </plugins>
   </build>
 
