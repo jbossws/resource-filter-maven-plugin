@@ -13,7 +13,7 @@
   <parent>
     <groupId>org.jboss.ws</groupId>
     <artifactId>jbossws-parent</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.4.0.Final</version>
   </parent>
 
   <!-- Source Control Management -->
