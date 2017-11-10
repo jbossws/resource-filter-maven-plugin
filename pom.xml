@@ -18,8 +18,8 @@
 
   <!-- Source Control Management -->
   <scm>
-    <connection>scm:svn:http://anonsvn.jboss.org/repos/jbossws/projects/plugins/maven/resource-filter/trunk</connection>
-    <developerConnection>scm:svn:https://svn.jboss.org/repos/jbossws/projects/plugins/maven/resource-filter/trunk</developerConnection>
+    <connection>scm:git:https://github.com/jbossws/resource-filter-maven-plugin.git</connection>
+    <developerConnection>scm:git:https://github.com/jbossws/resource-filter-maven-plugin.git</developerConnection>
     <url>https://github.com/jbossws/resource-filter-maven-plugin</url>
   </scm>
 
